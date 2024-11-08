@@ -5,20 +5,20 @@ class Config:
             'port': 3306,
             'user': 'root',
             'password': 'rootpassword',
-            'database': 'steam_games_data_warehouse'
+            'database': 'games_database'
         },
         'node2': {
             'host': 'mysql-node2',
             'port': 3306,
             'user': 'root',
             'password': 'rootpassword',
-            'database': 'steam_games_data_warehouse'
+            'database': 'games_database'
         },
         'node3': {
             'host': 'mysql-node3',
             'port': 3306,
             'user': 'root',
             'password': 'rootpassword',
-            'database': 'steam_games_data_warehouse'
+            'database': 'games_database'
         }
     }

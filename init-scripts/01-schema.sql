@@ -1,59 +1,14 @@
-CREATE DATABASE IF NOT EXISTS steam_games_data_warehouse;
+CREATE DATABASE IF NOT EXISTS games_database;
 
-USE steam_games_data_warehouse;
+USE games_database;
 
--- Drop all tables if they exist
-DROP TABLE IF EXISTS fact_game_sales;
-DROP TABLE IF EXISTS dim_game;
-DROP TABLE IF EXISTS dim_platform;
-DROP TABLE IF EXISTS dim_time;
-DROP TABLE IF EXISTS dim_ownership;
+DROP TABLE IF EXISTS games;
 
--- Dimension Tables
-CREATE TABLE dim_game (
-    game_key INT AUTO_INCREMENT PRIMARY KEY,
-    game_id INT,
+CREATE TABLE games (
+    game_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     required_age INT,
     price DECIMAL(10, 2),
     metacritic_score INT,
     achievements INT
-);
-
-CREATE TABLE dim_platform (
-    platform_key INT AUTO_INCREMENT PRIMARY KEY,
-    windows BOOLEAN,
-    mac BOOLEAN,
-    linux BOOLEAN
-);
-
-CREATE TABLE dim_time (
-    time_key INT AUTO_INCREMENT PRIMARY KEY,
-    release_date DATE,
-    year INT,
-    month INT,
-    day INT
-);
-
-CREATE TABLE dim_ownership (
-    ownership_key INT AUTO_INCREMENT PRIMARY KEY,
-    estimated_owners_min INT,
-    estimated_owners_max INT
-);
-
--- Fact Table
-CREATE TABLE fact_game_sales (
-    game_key INT,
-    platform_key INT,
-    time_key INT,
-    ownership_key INT,
-    recommendations INT,
-    positive_reviews INT,
-    negative_reviews INT,
-    average_playtime_forever INT,
-    peak_ccu INT,
-    FOREIGN KEY (game_key) REFERENCES dim_game(game_key),
-    FOREIGN KEY (platform_key) REFERENCES dim_platform(platform_key),
-    FOREIGN KEY (time_key) REFERENCES dim_time(time_key),
-    FOREIGN KEY (ownership_key) REFERENCES dim_ownership(ownership_key)
 );

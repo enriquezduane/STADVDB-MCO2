@@ -14,13 +14,13 @@ def health_check():
 
 @bp.route('/games', methods=['GET'])
 def get_games():
-    query = "SELECT * FROM dim_game LIMIT 10"
+    query = "SELECT * FROM games LIMIT 10"
     results = execute_on_all_nodes(query)
     return jsonify(results)
 
 @bp.route('/game/<int:game_id>', methods=['GET'])
 def get_game(game_id):
-    query = "SELECT * FROM dim_game WHERE game_id = %s"
+    query = "SELECT * FROM games WHERE game_id = %s"
     results = execute_on_all_nodes(query, (game_id,))
     return jsonify(results)
 
@@ -28,7 +28,7 @@ def get_game(game_id):
 def add_game():
     data = request.json
     query = """
-    INSERT INTO dim_game (game_id, name, required_age, price, metacritic_score, achievements)
+    INSERT INTO games (game_id, name, required_age, price, metacritic_score, achievements)
     VALUES (%s, %s, %s, %s, %s, %s)
     """
     params = (
@@ -46,7 +46,7 @@ def add_game():
 def update_game(game_id):
     data = request.json
     query = """
-    UPDATE dim_game
+    UPDATE games
     SET price = %s
     WHERE game_id = %s
     """
