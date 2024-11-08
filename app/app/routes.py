@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.database import execute_query, execute_on_all_nodes
+from app.concurrency_control import simulate_case_1, simulate_case_2, simulate_case_3
 
 bp = Blueprint('main', __name__)
 
@@ -53,3 +54,18 @@ def update_game(game_id):
     params = (data['price'], game_id)
     results = execute_on_all_nodes(query, params)
     return jsonify(results)
+
+@bp.route('/simulate_case_1', methods=['GET'])
+def simulate_case_1_route():
+    logs = simulate_case_1()
+    return jsonify({"status": "Case 1 simulation complete", "logs": logs})
+
+@bp.route('/simulate_case_2', methods=['GET'])
+def simulate_case_2_route():
+    logs = simulate_case_2()
+    return jsonify({"status": "Case 2 simulation complete", "logs": logs})
+
+@bp.route('/simulate_case_3', methods=['GET'])
+def simulate_case_3_route():
+    logs = simulate_case_3()
+    return jsonify({"status": "Case 3 simulation complete", "logs": logs})

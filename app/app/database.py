@@ -37,3 +37,12 @@ def execute_on_all_nodes(query, params=None):
     for node in Config.DB_CONFIGS.keys():
         results[node] = execute_query(node, query, params)
     return results
+
+def get_db_connection(node='central', isolation_level='READ COMMITTED'):
+    try:
+        conn = mysql.connector.connect(**Config.DB_CONFIGS[node])
+        conn.start_transaction(isolation_level=isolation_level)
+        return conn
+    except mysql.connector.Error as err:
+        print(f"Error connecting to {node}: {err}")
+        return None
