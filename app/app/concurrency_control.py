@@ -101,4 +101,16 @@ def simulate_case_3():
     t1.join()
     t2.join()
 
+    # Check final state of the database
+    final_state_logs = []
+    for node in ['central', 'node2', 'node3']:
+        conn = get_db_connection(node, 'READ COMMITTED')
+        cursor = conn.cursor()
+        cursor.execute("SELECT price FROM games WHERE game_id = 1")
+        result = cursor.fetchone()
+        final_state_logs.append(f"Final price on {node}: {result[0]}")
+        cursor.close()
+        conn.close()
+
+    logs.extend(final_state_logs)
     return logs
