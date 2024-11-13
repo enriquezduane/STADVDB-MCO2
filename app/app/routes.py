@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from app.database import execute_query, execute_on_all_nodes
 from app.concurrency_control import simulate_case_1, simulate_case_2, simulate_case_3
+from app.failure_recovery import fail_recover_1, fail_recover_2, fail_recover_3, fail_recover_4
 
 bp = Blueprint('main', __name__)
 
@@ -69,3 +70,23 @@ def simulate_case_2_route():
 def simulate_case_3_route():
     logs = simulate_case_3()
     return jsonify({"status": "Case 3 simulation complete", "logs": logs})
+
+@bp.route('/fail_recover_1', methods=['GET'])
+def fail_recover_1_route():
+    logs = fail_recover_1()
+    return jsonify({"status": "Case 1 fail recover simulation complete", "logs": logs})
+
+@bp.route('/fail_recover_2', methods=['GET'])
+def fail_recover_2_route():
+    logs = fail_recover_2()
+    return jsonify({"status": "Case 2 fail recover simulation complete", "logs": logs})
+
+@bp.route('/fail_recover_3', methods=['GET'])
+def fail_recover_3_route():
+    logs = fail_recover_3()
+    return jsonify({"status": "Case 3 fail recover simulation complete", "logs": logs})
+
+@bp.route('/fail_recover_4', methods=['GET'])
+def fail_recover_4_route():
+    logs = fail_recover_4()
+    return jsonify({"status": "Case 4 fail recover simulation complete", "logs": logs})
