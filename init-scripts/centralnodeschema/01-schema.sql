@@ -3,7 +3,6 @@ CREATE DATABASE IF NOT EXISTS games_database;
 USE games_database;
 
 DROP TABLE IF EXISTS games;
-
 CREATE TABLE games (
     game_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),

@@ -16,13 +16,37 @@ def health_check():
 
 @bp.route('/games', methods=['GET'])
 def get_games():
-    query = "SELECT * FROM games LIMIT 10"
+    query = "SELECT * FROM games"
+    results = execute_on_all_nodes(query)
+    return jsonify(results)
+
+@bp.route('/games/adult', methods=['GET'])
+def get_adult_games():
+    query = "SELECT * FROM games_for_adults"
+    results = execute_on_all_nodes(query)
+    return jsonify(results)
+
+@bp.route('/games/everyone', methods=['GET'])
+def get_everyone_games():
+    query = "SELECT * FROM games_for_everyone"
     results = execute_on_all_nodes(query)
     return jsonify(results)
 
 @bp.route('/game/<int:game_id>', methods=['GET'])
 def get_game(game_id):
     query = "SELECT * FROM games WHERE game_id = %s"
+    results = execute_on_all_nodes(query, (game_id,))
+    return jsonify(results)
+
+@bp.route('/game/adult/<int:game_id>', methods=['GET'])
+def get_adult_game(game_id):
+    query = "SELECT * FROM games_for_adults WHERE game_id = %s"
+    results = execute_on_all_nodes(query, (game_id,))
+    return jsonify(results)
+
+@bp.route('/game/everyone/<int:game_id>', methods=['GET'])
+def get_everyone_game(game_id):
+    query = "SELECT * FROM games_for_everyone WHERE game_id = %s"
     results = execute_on_all_nodes(query, (game_id,))
     return jsonify(results)
 
